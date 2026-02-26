@@ -24,3 +24,11 @@ class NormalSpec(BaseFunctionSpec):
             "def sample_dist(rng, count):\n"
             f"    return rng.normal({self.mean!r}, {self.stddev!r}, size=count)\n"
         )
+
+    @classmethod
+    def edge_specs(cls) -> tuple["NormalSpec", ...]:
+        return (
+            cls(mean=0.0, stddev=1e-9),
+            cls(mean=-10.0, stddev=1.0),
+            cls(mean=10.0, stddev=5.0),
+        )

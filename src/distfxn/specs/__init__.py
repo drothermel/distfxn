@@ -4,6 +4,7 @@ from pydantic import Field
 
 from .base import BaseFunctionSpec
 from .bernoulli import BernoulliSpec
+from .equivalence_cases import EquivalenceCase, default_equivalence_cases
 from .normal import NormalSpec
 from .output_checks import (
     CheckResult,
@@ -21,9 +22,15 @@ from .output_checks import (
 from .registry import FAMILY_REGISTRY, FamilyRegistry
 from .uniform import UniformSpec
 from .verification import (
+    CaseVerificationReport,
+    CaseEquivalenceResult,
+    SpecVerificationReport,
+    SpecEquivalenceReport,
     assert_valid_output,
     check_spec_equivalence,
     render_to_callable,
+    run_equivalence_cases,
+    run_render_equivalence_cases,
     verify_output,
 )
 
@@ -44,6 +51,8 @@ __all__ = [
     "FunctionSpec",
     "FamilyRegistry",
     "FAMILY_REGISTRY",
+    "EquivalenceCase",
+    "default_equivalence_cases",
     "OutputCheckBase",
     "OutputCheck",
     "CheckResult",
@@ -57,6 +66,12 @@ __all__ = [
     "default_output_checks",
     "render_to_callable",
     "check_spec_equivalence",
+    "CaseVerificationReport",
+    "CaseEquivalenceResult",
+    "SpecVerificationReport",
+    "SpecEquivalenceReport",
+    "run_equivalence_cases",
+    "run_render_equivalence_cases",
     "verify_output",
     "assert_valid_output",
 ]

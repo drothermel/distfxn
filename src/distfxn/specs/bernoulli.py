@@ -27,3 +27,11 @@ class BernoulliSpec(BaseFunctionSpec):
             "def sample_dist(rng, count):\n"
             f"    return rng.binomial(n=1, p={self.p!r}, size=count)\n"
         )
+
+    @classmethod
+    def edge_specs(cls) -> tuple["BernoulliSpec", ...]:
+        return (
+            cls(p=0.0),
+            cls(p=1.0),
+            cls(p=0.5),
+        )

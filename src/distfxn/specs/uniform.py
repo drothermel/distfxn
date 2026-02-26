@@ -31,3 +31,11 @@ class UniformSpec(BaseFunctionSpec):
             "def sample_dist(rng, count):\n"
             f"    return rng.uniform({self.start!r}, {self.end!r}, size=count)\n"
         )
+
+    @classmethod
+    def edge_specs(cls) -> tuple["UniformSpec", ...]:
+        return (
+            cls(start=-1.0, end=1.0),
+            cls(start=0.0, end=1e-9),
+            cls(start=10.0, end=1000.0),
+        )

@@ -18,6 +18,14 @@ class CheckResult(BaseModel):
     passed: bool
     message: str | None = None
 
+    def to_line(self) -> str:
+        status = "PASS" if self.passed else "FAIL"
+        details = f" ({self.message})" if self.message else ""
+        return f"[{status}] {self.name}{details}"
+
+    def to_dict(self) -> dict:
+        return self.model_dump()
+
 
 class OutputVerificationReport(BaseModel):
     model_config = ConfigDict(extra="forbid", frozen=True)
@@ -25,6 +33,21 @@ class OutputVerificationReport(BaseModel):
     family: str
     passed: bool
     results: tuple[CheckResult, ...]
+
+    def failed_results(self) -> tuple[CheckResult, ...]:
+        return tuple(result for result in self.results if not result.passed)
+
+    def to_lines(self) -> tuple[str, ...]:
+        status = "PASS" if self.passed else "FAIL"
+        lines = [f"[{status}] output checks for family '{self.family}'"]
+        lines.extend(f"  {result.to_line()}" for result in self.results)
+        return tuple(lines)
+
+    def to_markdown(self) -> str:
+        return "\n".join(self.to_lines())
+
+    def to_dict(self) -> dict:
+        return self.model_dump()
 
 
 class OutputCheckBase(BaseModel):

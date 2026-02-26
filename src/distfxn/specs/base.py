@@ -3,6 +3,7 @@ from typing import Any
 import numpy as np
 from pydantic import BaseModel, ConfigDict, Field
 
+from .equivalence_cases import EquivalenceCase, default_equivalence_cases
 from .output_checks import OutputCheck, OutputVerificationReport, default_output_checks
 
 
@@ -12,6 +13,9 @@ class BaseFunctionSpec(BaseModel):
     model_config = ConfigDict(extra="forbid", frozen=True)
     family: str
     output_checks: tuple[OutputCheck, ...] = Field(default_factory=default_output_checks)
+    equivalence_cases: tuple[EquivalenceCase, ...] = Field(
+        default_factory=default_equivalence_cases
+    )
 
     def sample_dist(self, rng, count: int):
         raise NotImplementedError("spec families must implement sample_dist()")
@@ -44,3 +48,13 @@ class BaseFunctionSpec(BaseModel):
         raise ValueError(
             f"output validation failed for family '{self.family}': {'; '.join(failures)}"
         )
+
+    def generated_equivalence_cases(self) -> tuple[EquivalenceCase, ...]:
+        return ()
+
+    def all_equivalence_cases(self) -> tuple[EquivalenceCase, ...]:
+        return self.equivalence_cases + self.generated_equivalence_cases()
+
+    @classmethod
+    def edge_specs(cls) -> tuple["BaseFunctionSpec", ...]:
+        return ()
