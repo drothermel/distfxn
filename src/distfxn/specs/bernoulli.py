@@ -3,6 +3,7 @@ from typing import Annotated, Literal
 from pydantic import Field
 
 from .base import BaseFunctionSpec
+from .output_checks import InSetCheck, OutputCheck, default_output_checks
 
 Probability = Annotated[
     float,
@@ -13,6 +14,10 @@ Probability = Annotated[
 class BernoulliSpec(BaseFunctionSpec):
     family: Literal["bernoulli"] = "bernoulli"
     p: Probability
+    output_checks: tuple[OutputCheck, ...] = Field(
+        default_factory=lambda: default_output_checks()
+        + (InSetCheck(allowed=(0.0, 1.0)),)
+    )
 
     def sample_dist(self, rng, count: int):
         return rng.binomial(n=1, p=self.p, size=count)
