@@ -1,14 +1,16 @@
-from typing import Literal
+from typing import Annotated, Literal
 
-from pydantic import model_validator
+from pydantic import Field, model_validator
 
 from .base import BaseFunctionSpec
+
+FiniteStrictFloat = Annotated[float, Field(strict=True, allow_inf_nan=False)]
 
 
 class UniformSpec(BaseFunctionSpec):
     family: Literal["uniform"] = "uniform"
-    start: float
-    end: float
+    start: FiniteStrictFloat
+    end: FiniteStrictFloat
 
     @model_validator(mode="after")
     def validate_bounds(self) -> "UniformSpec":

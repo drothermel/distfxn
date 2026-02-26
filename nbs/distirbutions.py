@@ -14,7 +14,7 @@ def _():
     count = 5
     raw_specs = [
         {"family": "bernoulli", "p": 0.3},
-        {"family": "uniform", "start": 0, "end": 50},
+        {"family": "uniform", "start": 0.0, "end": 50.0},
         {"family": "normal", "mean": 0.2, "stddev": 1.0},
     ]
     specs = [FAMILY_REGISTRY.parse(raw_spec) for raw_spec in raw_specs]

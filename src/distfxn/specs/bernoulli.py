@@ -4,7 +4,10 @@ from pydantic import Field
 
 from .base import BaseFunctionSpec
 
-Probability = Annotated[float, Field(ge=0.0, le=1.0)]
+Probability = Annotated[
+    float,
+    Field(strict=True, allow_inf_nan=False, ge=0.0, le=1.0),
+]
 
 
 class BernoulliSpec(BaseFunctionSpec):

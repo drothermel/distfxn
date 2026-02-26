@@ -4,13 +4,17 @@ from pydantic import Field
 
 from .base import BaseFunctionSpec
 
-PositiveFloat = Annotated[float, Field(gt=0.0)]
+FiniteStrictFloat = Annotated[float, Field(strict=True, allow_inf_nan=False)]
+PositiveFiniteStrictFloat = Annotated[
+    float,
+    Field(strict=True, allow_inf_nan=False, gt=0.0),
+]
 
 
 class NormalSpec(BaseFunctionSpec):
     family: Literal["normal"] = "normal"
-    mean: float
-    stddev: PositiveFloat
+    mean: FiniteStrictFloat
+    stddev: PositiveFiniteStrictFloat
 
     def sample_dist(self, rng, count: int):
         return rng.normal(self.mean, self.stddev, size=count)
