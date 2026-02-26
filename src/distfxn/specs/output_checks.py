@@ -7,8 +7,7 @@ from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 if TYPE_CHECKING:
     from .base import BaseFunctionSpec
-
-FiniteStrictFloat = Annotated[float, Field(strict=True, allow_inf_nan=False)]
+from .types import FiniteStrictFloat
 
 
 class CheckResult(BaseModel):

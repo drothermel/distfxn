@@ -32,7 +32,7 @@ class FamilyRegistry:
     def parse(self, data: Mapping[str, Any]) -> BaseFunctionSpec:
         family_value = data.get("family")
         if not isinstance(family_value, str):
-            raise ValueError("spec payload must include a string 'family' field")
+            raise TypeError("spec payload must include a string 'family' field")
         spec_cls = self.get(family_value)
         return spec_cls.model_validate(data)
 

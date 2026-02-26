@@ -3,8 +3,7 @@ from typing import Annotated, Literal
 from pydantic import Field
 
 from .base import BaseFunctionSpec
-
-FiniteStrictFloat = Annotated[float, Field(strict=True, allow_inf_nan=False)]
+from .types import FiniteStrictFloat
 PositiveFiniteStrictFloat = Annotated[
     float,
     Field(strict=True, allow_inf_nan=False, gt=0.0),

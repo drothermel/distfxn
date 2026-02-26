@@ -70,7 +70,7 @@ SpecEquivalenceReport = SpecVerificationReport
 
 def render_to_callable(spec: BaseFunctionSpec):
     namespace = {}
-    exec(spec.render(), {}, namespace)
+    exec(spec.render(), namespace, namespace)
     sample_dist = namespace.get("sample_dist")
     if not callable(sample_dist):
         raise ValueError("render() must define a callable named 'sample_dist'")

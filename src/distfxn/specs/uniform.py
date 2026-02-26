@@ -1,11 +1,10 @@
-from typing import Annotated, Literal
+from typing import Literal
 
 from pydantic import Field, model_validator
 
 from .base import BaseFunctionSpec
 from .output_checks import InRangeCheck, OutputCheck, default_output_checks
-
-FiniteStrictFloat = Annotated[float, Field(strict=True, allow_inf_nan=False)]
+from .types import FiniteStrictFloat
 
 
 class UniformSpec(BaseFunctionSpec):
@@ -14,7 +13,7 @@ class UniformSpec(BaseFunctionSpec):
     end: FiniteStrictFloat
     output_checks: tuple[OutputCheck, ...] = Field(
         default_factory=lambda: default_output_checks()
-        + (InRangeCheck(min_field="start", max_field="end"),)
+        + (InRangeCheck(min_field="start", max_field="end", include_max=False),)
     )
 
     @model_validator(mode="after")
