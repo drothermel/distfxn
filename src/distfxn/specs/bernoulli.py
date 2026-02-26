@@ -11,6 +11,9 @@ class BernoulliSpec(BaseFunctionSpec):
     family: Literal["bernoulli"] = "bernoulli"
     p: Probability
 
+    def sample_dist(self, rng, count: int):
+        return rng.binomial(n=1, p=self.p, size=count)
+
     def render(self) -> str:
         return (
             "def sample_dist(rng, count):\n"

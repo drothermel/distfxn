@@ -12,6 +12,9 @@ class NormalSpec(BaseFunctionSpec):
     mean: float
     stddev: PositiveFloat
 
+    def sample_dist(self, rng, count: int):
+        return rng.normal(self.mean, self.stddev, size=count)
+
     def render(self) -> str:
         return (
             "def sample_dist(rng, count):\n"

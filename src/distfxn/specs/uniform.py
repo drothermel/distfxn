@@ -16,6 +16,9 @@ class UniformSpec(BaseFunctionSpec):
             raise ValueError("start must be less than end")
         return self
 
+    def sample_dist(self, rng, count: int):
+        return rng.uniform(self.start, self.end, size=count)
+
     def render(self) -> str:
         return (
             "def sample_dist(rng, count):\n"
