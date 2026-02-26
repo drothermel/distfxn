@@ -6,3 +6,6 @@ class BaseFunctionSpec(BaseModel):
 
     model_config = ConfigDict(extra="forbid", frozen=True)
     family: str
+
+    def render(self) -> str:
+        raise NotImplementedError("spec families must implement render()")

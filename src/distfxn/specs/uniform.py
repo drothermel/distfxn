@@ -15,3 +15,9 @@ class UniformSpec(BaseFunctionSpec):
         if self.start >= self.end:
             raise ValueError("start must be less than end")
         return self
+
+    def render(self) -> str:
+        return (
+            "def sample_dist(rng, count):\n"
+            f"    return rng.uniform({self.start!r}, {self.end!r}, size=count)\n"
+        )
