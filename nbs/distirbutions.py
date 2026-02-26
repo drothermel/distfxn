@@ -4,22 +4,13 @@ __generated_with = "0.20.2"
 app = marimo.App(width="columns")
 
 with app.setup:
-    import marimo as mo
-    import numpy as np
-    from distfxn.specs import FAMILY_REGISTRY
+    from distfxn.specs import FAMILY_REGISTRY, check_spec_equivalence
 
     seed = 1023
 
 
-@app.function
-def render_to_callable(spec):
-    namespace = {}
-    exec(spec.render(), {}, namespace)
-    return namespace["sample_dist"]
-
-
 @app.cell
-def _(render_to_callable):
+def _():
     count = 5
     raw_specs = [
         {"family": "bernoulli", "p": 0.3},
@@ -28,15 +19,10 @@ def _(render_to_callable):
     ]
     specs = [FAMILY_REGISTRY.parse(raw_spec) for raw_spec in raw_specs]
 
-    checks = []
-    for spec in specs:
-        rng_canonical = np.random.default_rng(seed)
-        rng_rendered = np.random.default_rng(seed)
-
-        canonical_values = spec.sample_dist(rng_canonical, count)
-        rendered_sample_dist = render_to_callable(spec)
-        rendered_values = rendered_sample_dist(rng_rendered, count)
-        checks.append((spec.family, np.array_equal(canonical_values, rendered_values)))
+    checks = [
+        (spec.family, check_spec_equivalence(spec, seed=seed, count=count))
+        for spec in specs
+    ]
 
     assert all(match for _, match in checks)
     checks

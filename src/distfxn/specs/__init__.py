@@ -7,6 +7,7 @@ from .bernoulli import BernoulliSpec
 from .normal import NormalSpec
 from .registry import FAMILY_REGISTRY, FamilyRegistry
 from .uniform import UniformSpec
+from .verification import check_spec_equivalence, render_to_callable
 
 FunctionSpec = Annotated[
     BernoulliSpec | UniformSpec | NormalSpec,
@@ -25,4 +26,6 @@ __all__ = [
     "FunctionSpec",
     "FamilyRegistry",
     "FAMILY_REGISTRY",
+    "render_to_callable",
+    "check_spec_equivalence",
 ]
