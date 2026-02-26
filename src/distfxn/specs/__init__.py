@@ -3,9 +3,9 @@ from typing import Annotated
 from pydantic import Field
 
 from .base import BaseFunctionSpec
-from .bernoulli import BernoulliSpec
+from .bernoulli import BernoulliSamplingSpec, BernoulliSpec
 from .equivalence_cases import EquivalenceCase, default_equivalence_cases
-from .normal import NormalSpec
+from .normal import NormalSamplingSpec, NormalSpec
 from .output_checks import (
     CheckResult,
     FiniteValuesCheck,
@@ -19,8 +19,13 @@ from .output_checks import (
     OutputVerificationReport,
     default_output_checks,
 )
+from .param_sampling import (
+    LogUniformPositiveFloatParamSampler,
+    SamplingSpecError,
+    UniformFloatParamSampler,
+)
 from .registry import FAMILY_REGISTRY, FamilyRegistry
-from .uniform import UniformSpec
+from .uniform import UniformSamplingSpec, UniformSpec
 from .verification import (
     CaseVerificationReport,
     CaseEquivalenceResult,
@@ -46,8 +51,11 @@ del _spec_cls
 __all__ = [
     "BaseFunctionSpec",
     "BernoulliSpec",
+    "BernoulliSamplingSpec",
     "UniformSpec",
+    "UniformSamplingSpec",
     "NormalSpec",
+    "NormalSamplingSpec",
     "FunctionSpec",
     "FamilyRegistry",
     "FAMILY_REGISTRY",
@@ -64,6 +72,9 @@ __all__ = [
     "InSetCheck",
     "InRangeCheck",
     "default_output_checks",
+    "UniformFloatParamSampler",
+    "LogUniformPositiveFloatParamSampler",
+    "SamplingSpecError",
     "render_to_callable",
     "check_spec_equivalence",
     "CaseVerificationReport",
