@@ -7,7 +7,11 @@ authors = [
     { name = "Danielle Rothermel", email = "danielle.rothermel@gmail.com" }
 ]
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "marimo[all]>=0.20.2",
+    "numpy>=2.4.2",
+    "pydantic>=2.11.7",
+]
 
 [build-system]
 requires = ["hatchling"]
